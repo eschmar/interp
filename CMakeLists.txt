@@ -17,7 +17,7 @@ add_executable(example example.cpp)
 
 # add plotting dependencies
 find_package(Python COMPONENTS Development NumPy)
-target_include_directories(example PRIVATE ${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
+target_include_directories(example PRIVATE ${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS} "matplotlib-cpp")
 
 # link libs
 target_link_libraries(example PUBLIC interp Python::Python Python::NumPy)

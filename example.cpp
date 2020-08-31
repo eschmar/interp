@@ -1,6 +1,6 @@
 #include <iostream>
 #include "interp.h"
-#include "matplotlib-cpp/matplotlibcpp.h"
+#include "matplotlibcpp.h"
 #include <iomanip>
 #include <vector>
 
