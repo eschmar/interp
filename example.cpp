@@ -1,6 +1,6 @@
 #include <iostream>
 #include "interp.h"
-#include <matplot/matplot.h>
+// #include <matplot/matplot.h>
 #include <iomanip>
 
 int main() {
