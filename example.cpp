@@ -1,20 +1,28 @@
 #include <iostream>
 #include "interp.h"
-// #include <matplot/matplot.h>
+#include "matplotlib-cpp/matplotlibcpp.h"
 #include <iomanip>
+#include <vector>
+
+namespace plt = matplotlibcpp;
 
 int main() {
     std::cout << "Hello from interp! " << interp_VERSION_SEMANTIC << "\n";
 
     pew::Interp p = pew::interp(1000);
 
-    p.setDuration(5000);
-    p.setOnStep([](double value, uint64_t elapsed){
-        std::cout.precision(17);
-        std::cout << "[" << elapsed << "\t" << value << "]. Tick.\n";
+    std::vector<double> x;
+    std::vector<uint64_t> y;
+
+    p.setOnStep([&](double value, uint64_t elapsed) mutable {
+        x.push_back(value);
+        y.push_back(elapsed);
     });
 
     p.run();
+
+    plt::plot(x, y);
+    plt::show();
 
     return 0;
 }
