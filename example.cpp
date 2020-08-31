@@ -9,9 +9,9 @@ int main() {
     pew::Interp p = pew::interp(1000);
 
     p.setDuration(5000);
-    p.setOnStep([](double value){
+    p.setOnStep([](double value, uint64_t elapsed){
         std::cout.precision(17);
-        std::cout << "Val: " << std::fixed << value << ". Tick.\n";
+        std::cout << "[" << elapsed << "\t" << value << "]. Tick.\n";
     });
 
     p.run();

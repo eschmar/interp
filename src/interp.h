@@ -16,7 +16,7 @@ class Interp {
     int frequencyHz = 60;
     uint64_t start = 0, duration = 400;
 
-    std::function<void(double)> onStep;
+    std::function<void(double,uint64_t)> onStep;
     std::function<void()> onStart, onEnd;
     std::function<double(double)> easing;
 
@@ -35,7 +35,7 @@ class Interp {
         if (easing) ratio = easing(ratio);
 
         // allow user defined behaviour on step
-        if (onStep) onStep(ratio);
+        if (onStep) onStep(ratio, elapsed);
 
         // check if end is reached
         if (ratio >= 1.0) {
@@ -52,7 +52,7 @@ class Interp {
     void setDuration(uint64_t dur) { duration = dur; };
     void setOnStart(std::function<void()> fun) { onStart = fun; };
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
-    void setOnStep(std::function<void(double)> fun) { onStep = fun; };
+    void setOnStep(std::function<void(double,uint64_t)> fun) { onStep = fun; };
 
     void run() {
         start = now();
