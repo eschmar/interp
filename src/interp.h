@@ -49,6 +49,7 @@ class Interp {
 
   public:
     static Interp create(long duration);
+    void setDuration(uint64_t dur) { duration = dur; };
     void setOnStart(std::function<void()> fun) { onStart = fun; };
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setOnStep(std::function<void(double)> fun) { onStep = fun; };
