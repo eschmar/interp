@@ -38,7 +38,7 @@ class Interp {
         if (onStep) onStep(ratio, elapsed);
 
         // check if end is reached
-        if (ratio >= 1.0) {
+        if (elapsed > duration) {
             if (onEnd) onEnd();
             return;
         }

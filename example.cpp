@@ -3,6 +3,7 @@
 #include "matplotlibcpp.h"
 #include <iomanip>
 #include <vector>
+#include <math.h>
 
 namespace plt = matplotlibcpp;
 
@@ -19,7 +20,7 @@ int main() {
         y.push_back(elapsed);
     });
 
-    p.setEasing([](double in){ return in * in * in; });
+    p.setEasing([](double in){ return sqrt(in); });
 
     p.run();
 
