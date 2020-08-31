@@ -53,6 +53,7 @@ class Interp {
     void setOnStart(std::function<void()> fun) { onStart = fun; };
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setOnStep(std::function<void(double,uint64_t)> fun) { onStep = fun; };
+    void setEasing(std::function<double(double)> fun) { easing = fun; };
 
     void run() {
         start = now();

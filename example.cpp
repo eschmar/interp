@@ -19,10 +19,16 @@ int main() {
         y.push_back(elapsed);
     });
 
+    p.setEasing([](double in){ return in * in * in; });
+
     p.run();
 
-    plt::plot(x, y);
-    plt::show();
+    plt::plot(y, x);
+    plt::save("plot.png");
+
+    std::cout << "Wait for a bit...\n";
+    usleep(2000000);
+    std::cout << "Done.\n";
 
     return 0;
 }
