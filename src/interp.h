@@ -15,6 +15,7 @@ namespace pew {
 class Interp {
     int frequencyHz = 60;
     uint64_t start = 0, duration = 400;
+    bool isInterrupted = false;
 
     std::function<void(double,uint64_t)> onStep;
     std::function<void()> onStart, onEnd;
@@ -38,7 +39,7 @@ class Interp {
         if (onStep) onStep(ratio, elapsed);
 
         // check if end is reached
-        if (elapsed > duration) {
+        if (elapsed > duration || isInterrupted) {
             if (onEnd) onEnd();
             return;
         }
@@ -54,9 +55,11 @@ class Interp {
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setOnStep(std::function<void(double,uint64_t)> fun) { onStep = fun; };
     void setEasing(std::function<double(double)> fun) { easing = fun; };
+    void stop() { isInterrupted = true; };
 
     void run() {
         start = now();
+        isInterrupted = false;
         if (onStart) onStart();
         tick();
     }
