@@ -10,6 +10,7 @@
 
 #define interp_VERSION_SEMANTIC "1.0.0"
 
+// TODO: how to use namespace and have nice looking factory
 namespace pew {
 
 class Interp {
@@ -53,7 +54,7 @@ class Interp {
     void setOnStart(std::function<void()> fun) { onStart = fun; };
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setEasing(std::function<double(double)> fun) { easing = fun; };
-    void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 0, 240); };
+    void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 1, 240); };
     void stop() { isInterrupted = true; };
 
     void run() {
