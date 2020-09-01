@@ -10,17 +10,18 @@ namespace plt = matplotlibcpp;
 int main() {
     std::cout << "Hello from interp! " << interp_VERSION_SEMANTIC << "\n";
 
-    pew::Interp p = pew::interp(1000);
-
     std::vector<double> x;
     std::vector<uint64_t> y;
 
-    p.setOnStep([&](double value, uint64_t elapsed) mutable {
+    pew::Interp p = pew::Interp([&](double value, uint64_t elapsed) mutable {
+        std::cout << "[" << elapsed << "\t" << value << "]\n";
         x.push_back(value);
         y.push_back(elapsed);
-    });
+    }, 5000);
 
-    p.setEasing([](double in){ return sqrt(in); });
+    p.setEasing([](double in){
+        return sqrt(in);
+    });
 
     p.run();
 

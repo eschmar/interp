@@ -13,7 +13,7 @@
 namespace pew {
 
 class Interp {
-    int frequencyHz = 60;
+    uint16_t frequencyHz = 60;
     uint64_t start = 0, duration = 400;
     bool isInterrupted = false;
 
@@ -49,12 +49,11 @@ class Interp {
     }
 
   public:
-    static Interp create(long duration);
-    void setDuration(uint64_t dur) { duration = dur; };
+    Interp(std::function<void(double,uint64_t)> fun, uint64_t duration);
     void setOnStart(std::function<void()> fun) { onStart = fun; };
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
-    void setOnStep(std::function<void(double,uint64_t)> fun) { onStep = fun; };
     void setEasing(std::function<double(double)> fun) { easing = fun; };
+    void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 0, 240); };
     void stop() { isInterrupted = true; };
 
     void run() {
@@ -64,10 +63,6 @@ class Interp {
         tick();
     }
 };
-
-inline Interp interp(long duration) {
-    return Interp::create(duration);
-}
 
 } // namespace
 
