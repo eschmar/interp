@@ -20,8 +20,8 @@ class Interp {
     bool isInterrupted = false;
     std::thread thr;
 
-    std::function<void(double,uint64_t)> onStep;
-    std::function<void()> onStart, onEnd;
+    std::function<void(double, uint64_t)> onStep;
+    std::function<void()> onEnd;
     std::function<double(double)> easing;
 
     inline uint64_t now() {
@@ -53,8 +53,7 @@ class Interp {
     }
 
   public:
-    Interp(std::function<void(double,uint64_t)> fun, uint64_t duration);
-    void setOnStart(std::function<void()> fun) { onStart = fun; };
+    Interp(std::function<void(double, uint64_t)> fun, uint64_t duration);
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setEasing(std::function<double(double)> fun) { easing = fun; };
     void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 1, 240); };
@@ -63,7 +62,6 @@ class Interp {
     void run() {
         start = now();
         isInterrupted = false;
-        if (onStart) onStart();
         thr = std::thread(&Interp::tick, this);
     }
 
