@@ -25,11 +25,11 @@ int main() {
 
     p.run();
 
+    usleep(2000000);
+
     plt::plot(y, x);
     plt::save("plot.png");
 
-    std::cout << "Wait for a bit...\n";
-    usleep(2000000);
     std::cout << "Done.\n";
 
     return 0;

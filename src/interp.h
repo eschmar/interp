@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <limits>
 #include <algorithm>
+#include <thread>
 
 #define interp_VERSION_SEMANTIC "1.0.0"
 
@@ -17,6 +18,7 @@ class Interp {
     uint16_t frequencyHz = 60;
     uint64_t start = 0, duration = 400;
     bool isInterrupted = false;
+    std::thread thr;
 
     std::function<void(double,uint64_t)> onStep;
     std::function<void()> onStart, onEnd;
@@ -29,6 +31,7 @@ class Interp {
     }
 
     Interp();
+
     void tick() {
         uint64_t elapsed = this->now() - start;
         double ratio = std::clamp((double) elapsed / duration, 0.0, 1.0);
@@ -61,7 +64,13 @@ class Interp {
         start = now();
         isInterrupted = false;
         if (onStart) onStart();
-        tick();
+        thr = std::thread(&Interp::tick, this);
+    }
+
+    ~Interp() {
+        if (!thr.joinable()) return;
+        stop();
+        thr.join();
     }
 };
 
