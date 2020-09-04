@@ -20,13 +20,11 @@ int main() {
         return true;
     }, 5000);
 
-    p.setEasing([](double in){
-        return sqrt(in);
-    });
+    p.setEasing(pew::InterpolatorMethod::sqrt);
 
     p.run();
 
-    usleep(2000000);
+    usleep(5000000);
 
     plt::plot(y, x);
     plt::save("plot.png");

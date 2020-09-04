@@ -8,6 +8,7 @@
 #include <limits>
 #include <algorithm>
 #include <thread>
+#include "InterpolatorMethod.h"
 
 #define interp_VERSION_SEMANTIC "1.0.0"
 
@@ -66,9 +67,10 @@ class Interp {
     }
 
     ~Interp() {
-        if (!thr.joinable()) return;
-        stop();
-        thr.join();
+        if (thr.joinable()) {
+            stop();
+            thr.join();
+        }
     }
 };
 
