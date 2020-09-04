@@ -13,10 +13,11 @@ int main() {
     std::vector<double> x;
     std::vector<uint64_t> y;
 
-    pew::Interp p = pew::Interp([&](double value, uint64_t elapsed) mutable {
+    pew::Interp p([&](double value, uint64_t elapsed) mutable {
         std::cout << "[" << elapsed << "\t" << value << "]\n";
         x.push_back(value);
         y.push_back(elapsed);
+        return true;
     }, 5000);
 
     p.setEasing([](double in){

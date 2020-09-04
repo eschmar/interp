@@ -20,7 +20,7 @@ class Interp {
     bool isInterrupted = false;
     std::thread thr;
 
-    std::function<void(double, uint64_t)> onStep;
+    std::function<bool(double, uint64_t)> onStep;
     std::function<void()> onEnd;
     std::function<double(double)> easing;
 
@@ -40,7 +40,7 @@ class Interp {
         if (easing) ratio = easing(ratio);
 
         // allow user defined behaviour on step
-        if (onStep) onStep(ratio, elapsed);
+        if (onStep && !onStep(ratio, elapsed)) isInterrupted = true;
 
         // check if end is reached
         if (elapsed > duration || isInterrupted) {
@@ -53,7 +53,7 @@ class Interp {
     }
 
   public:
-    Interp(std::function<void(double, uint64_t)> fun, uint64_t duration);
+    Interp(std::function<bool(double, uint64_t)> fun, uint64_t duration);
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setEasing(std::function<double(double)> fun) { easing = fun; };
     void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 1, 240); };
