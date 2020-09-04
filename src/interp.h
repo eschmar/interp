@@ -40,7 +40,7 @@ class Interp {
         if (easing) ratio = easing(ratio);
 
         // allow user defined behaviour on step
-        if (onStep && !onStep(ratio, elapsed)) isInterrupted = true;
+        if (onStep && !onStep(ratio, elapsed)) stop();
 
         // check if end is reached
         if (elapsed > duration || isInterrupted) {
