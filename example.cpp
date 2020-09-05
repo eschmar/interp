@@ -13,8 +13,8 @@ namespace plt = matplotlibcpp;
 int main() {
     std::cout << "Hello from interp! " << interp_VERSION_SEMANTIC << "\n";
 
-    std::vector<double> x;
-    std::vector<double> y; // use double isntead of uint64_t so named_plot does not complain.
+    std::vector<double> x; // use double isntead of uint64_t so named_plot does not complain.
+    std::vector<double> y;
 
     std::vector<std::pair<std::string, std::function<double(double)>>> easings;
 
@@ -30,8 +30,8 @@ int main() {
 
         interp::Interpolator interp([&](double value, uint64_t elapsed) mutable {
             std::cout << "[" << elapsed << "\t" << value << "]\n";
-            x.push_back(value);
-            y.push_back(elapsed);
+            x.push_back(elapsed);
+            y.push_back(value);
             return true;
         }, RUNTIME_LENGTH_MS);
 
@@ -40,11 +40,12 @@ int main() {
 
         usleep(RUNTIME_LENGTH_MS * 1000);
 
-        plt::named_plot(easing.first, y, x);
+        plt::named_plot(easing.first, x, y);
         // plt::plot(y, x);
     }
 
     plt::legend();
+    plt::title("x: elapsed time in ms, y: current value");
     plt::save("plot.png");
 
     return 0;
