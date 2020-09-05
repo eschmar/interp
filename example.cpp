@@ -3,33 +3,46 @@
 #include "matplotlibcpp.h"
 #include <iomanip>
 #include <vector>
+#include <utility>
 #include <math.h>
 
 namespace plt = matplotlibcpp;
+
+#define RUNTIME_LENGTH_MS 2000
 
 int main() {
     std::cout << "Hello from interp! " << interp_VERSION_SEMANTIC << "\n";
 
     std::vector<double> x;
-    std::vector<uint64_t> y;
+    std::vector<double> y; // use double isntead of uint64_t so named_plot does not complain.
 
-    pew::Interpolator p([&](double value, uint64_t elapsed) mutable {
-        std::cout << "[" << elapsed << "\t" << value << "]\n";
-        x.push_back(value);
-        y.push_back(elapsed);
-        return true;
-    }, 5000);
+    std::vector<std::pair<std::string, std::function<double(double)>>> easings;
 
-    p.setEasing(pew::InterpolatorMethod::sqrt);
+    easings.push_back(std::make_pair(std::string("Linear"), pew::InterpolatorMethod::linear));
+    easings.push_back(std::make_pair(std::string("Sqrt"), pew::InterpolatorMethod::sqrt));
 
-    p.run();
+    for (std::pair<std::string, std::function<double(double)>> easing : easings) {
+        x.clear();
+        y.clear();
 
-    usleep(5000000);
+        pew::Interpolator interp([&](double value, uint64_t elapsed) mutable {
+            std::cout << "[" << elapsed << "\t" << value << "]\n";
+            x.push_back(value);
+            y.push_back(elapsed);
+            return true;
+        }, RUNTIME_LENGTH_MS);
 
-    plt::plot(y, x);
+        interp.setEasing(easing.second);
+        interp.run();
+
+        usleep(RUNTIME_LENGTH_MS * 1000);
+
+        // plt::plot(y, x);
+        plt::named_plot(easing.first, y, x);
+    }
+
+    plt::legend();
     plt::save("plot.png");
-
-    std::cout << "Done.\n";
 
     return 0;
 }
