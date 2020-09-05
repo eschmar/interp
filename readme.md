@@ -4,7 +4,7 @@ Minimal library for running user defined stepwise behaviour over a specific amou
 
 <img src="https://github.com/eschmar/interp/raw/master/img/plot.png" alt="Methods" style="max-width:100%;">
 
-## Requirements:
+## Requirements
 
 * python
 * numpy
