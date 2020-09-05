@@ -16,13 +16,13 @@ int main() {
     std::vector<double> x; // use double isntead of uint64_t so named_plot does not complain.
     std::vector<double> y;
 
-    std::vector<std::pair<std::string, std::function<double(double)>>> easings;
-
-    easings.push_back(std::make_pair(std::string("Linear"), interp::InterpolatorMethod::linear));
-    easings.push_back(std::make_pair(std::string("Sqrt"), interp::InterpolatorMethod::sqrt));
-    easings.push_back(std::make_pair(std::string("Square"), interp::InterpolatorMethod::square));
-    easings.push_back(std::make_pair(std::string("Cube"), interp::InterpolatorMethod::cube));
-    easings.push_back(std::make_pair(std::string("CubicRoot"), interp::InterpolatorMethod::cubicRoot));
+    std::vector<std::pair<std::string, std::function<double(double)>>> easings = {
+        std::make_pair(std::string("Linear"), interp::InterpolatorMethod::linear),
+        std::make_pair(std::string("Sqrt"), interp::InterpolatorMethod::sqrt),
+        std::make_pair(std::string("Square"), interp::InterpolatorMethod::square),
+        std::make_pair(std::string("Cube"), interp::InterpolatorMethod::cube),
+        std::make_pair(std::string("CubicRoot"), interp::InterpolatorMethod::cubicRoot)
+    };
 
     for (std::pair<std::string, std::function<double(double)>> easing : easings) {
         x.clear();
@@ -41,7 +41,6 @@ int main() {
         usleep(RUNTIME_LENGTH_MS * 1000);
 
         plt::named_plot(easing.first, x, y);
-        // plt::plot(y, x);
     }
 
     plt::legend();
