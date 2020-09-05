@@ -15,10 +15,12 @@ Some sanity checks might have to be [manually commented out](https://github.com/
 
 ## Example
 
+Stepwise interpolation from `0.0` to `1.0` using a cubic method over 2 seconds.
+
 ```cpp
-pew::Interpolator interp([&](double value, uint64_t elapsed) mutable {
+pew::Interpolator interp([&](double value, uint64_t elapsedMs) mutable {
     // define stepwise behaviour here
-    std::cout << "[" << elapsed << "\t" << value << "]\n";
+    std::cout << "[" << elapsedMs << "\t" << value << "]\n";
     return true; // return false to abort
 }, 2000);
 
