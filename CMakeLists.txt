@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # set the project name and version
-project(Interpolator)
+project(interp)
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -20,7 +20,7 @@ find_package(Python COMPONENTS Development NumPy)
 target_include_directories(example PRIVATE ${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS} "matplotlib-cpp")
 
 # link libs
-target_link_libraries(example PUBLIC Interpolator Python::Python Python::NumPy)
+target_link_libraries(example PUBLIC interp Python::Python Python::NumPy)
 
 # add the binary tree to the search path for include files
 target_include_directories(example PUBLIC "${PROJECT_BINARY_DIR}")

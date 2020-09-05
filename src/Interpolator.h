@@ -1,5 +1,5 @@
-#ifndef PEW_INTERP_H
-#define PEW_INTERP_H
+#ifndef INTERP_INTERPOLATOR_H_
+#define INTERP_INTERPOLATOR_H_
 
 #include <functional>
 #include <iostream>
@@ -13,7 +13,7 @@
 #define interp_VERSION_SEMANTIC "1.0.0"
 
 // TODO: how to use namespace and have nice looking factory
-namespace pew {
+namespace interp {
 
 class Interpolator {
     uint16_t frequencyHz = 60;

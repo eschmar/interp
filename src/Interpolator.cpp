@@ -1,6 +1,6 @@
 #include "Interpolator.h"
 
-namespace pew {
+namespace interp {
     Interpolator::Interpolator() {}
 
     Interpolator::Interpolator(std::function<bool(double, uint64_t)> fun, uint64_t duration) {
