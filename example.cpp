@@ -20,6 +20,9 @@ int main() {
 
     easings.push_back(std::make_pair(std::string("Linear"), pew::InterpolatorMethod::linear));
     easings.push_back(std::make_pair(std::string("Sqrt"), pew::InterpolatorMethod::sqrt));
+    easings.push_back(std::make_pair(std::string("Square"), pew::InterpolatorMethod::square));
+    easings.push_back(std::make_pair(std::string("Cube"), pew::InterpolatorMethod::cube));
+    easings.push_back(std::make_pair(std::string("CubicRoot"), pew::InterpolatorMethod::cubicRoot));
 
     for (std::pair<std::string, std::function<double(double)>> easing : easings) {
         x.clear();
@@ -37,8 +40,8 @@ int main() {
 
         usleep(RUNTIME_LENGTH_MS * 1000);
 
-        // plt::plot(y, x);
         plt::named_plot(easing.first, y, x);
+        // plt::plot(y, x);
     }
 
     plt::legend();
