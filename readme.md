@@ -1,6 +1,6 @@
 # interp
 
-Minimal library for running user defined stepwise behaviour over a specific amount of time.
+Minimal library for running user defined behaviour stepwise over a specific amount of time.
 
 <img src="https://github.com/eschmar/interp/raw/master/img/plot.png" alt="Methods" style="max-width:100%;">
 
