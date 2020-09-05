@@ -15,7 +15,7 @@
 // TODO: how to use namespace and have nice looking factory
 namespace pew {
 
-class Interp {
+class Interpolator {
     uint16_t frequencyHz = 60;
     uint64_t start = 0, duration = 400;
     bool isInterrupted = false;
@@ -31,7 +31,7 @@ class Interp {
         ).count();
     }
 
-    Interp();
+    Interpolator();
 
     void tick() {
         uint64_t elapsed = this->now() - start;
@@ -54,7 +54,7 @@ class Interp {
     }
 
   public:
-    Interp(std::function<bool(double, uint64_t)> fun, uint64_t duration);
+    Interpolator(std::function<bool(double, uint64_t)> fun, uint64_t duration);
     void setOnEnd(std::function<void()> fun) { onEnd = fun; };
     void setEasing(std::function<double(double)> fun) { easing = fun; };
     void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 1, 240); };
@@ -63,10 +63,10 @@ class Interp {
     void run() {
         start = now();
         isInterrupted = false;
-        thr = std::thread(&Interp::tick, this);
+        thr = std::thread(&Interpolator::tick, this);
     }
 
-    ~Interp() {
+    ~Interpolator() {
         if (thr.joinable()) {
             stop();
             thr.join();
