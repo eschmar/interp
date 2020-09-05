@@ -17,8 +17,9 @@ Some sanity checks might have to be [manually commented out](https://github.com/
 
 ```cpp
 pew::Interpolator interp([&](double value, uint64_t elapsed) mutable {
+    // define stepwise behaviour here
     std::cout << "[" << elapsed << "\t" << value << "]\n";
-    return true;
+    return true; // return false to abort
 }, 2000);
 
 interp.setEasing(pew::InterpolatorMethod::cube); // default is linear
