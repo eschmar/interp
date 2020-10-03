@@ -37,8 +37,7 @@ int main() {
 
         interp.setEasing(easing.second);
         interp.run();
-
-        usleep(RUNTIME_LENGTH_MS * 1000);
+        interp.wait();
 
         plt::named_plot(easing.first, x, y);
     }
