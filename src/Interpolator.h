@@ -55,10 +55,14 @@ class Interpolator {
 
   public:
     Interpolator(std::function<bool(double, uint64_t)> fun, uint64_t duration);
-    void setOnEnd(std::function<void()> fun) { onEnd = fun; };
-    void setEasing(std::function<double(double)> fun) { easing = fun; };
-    void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 1, 240); };
-    void stop() { isInterrupted = true; };
+    void setOnEnd(std::function<void()> fun) { onEnd = fun; }
+    void setEasing(std::function<double(double)> fun) { easing = fun; }
+    void setFrequency(uint16_t frequency) { frequencyHz = std::clamp((int) frequency, 1, 240); }
+    void stop() { isInterrupted = true; }
+
+    void wait() {
+        if (thr.joinable()) thr.join();
+    }
 
     void run() {
         start = now();
@@ -67,10 +71,8 @@ class Interpolator {
     }
 
     ~Interpolator() {
-        if (thr.joinable()) {
-            stop();
-            thr.join();
-        }
+        stop();
+        wait();
     }
 };
 
